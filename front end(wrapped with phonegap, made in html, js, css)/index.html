@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+	<meta charset="utf-8" />
+	<title>APP</title>
+
+	<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+	<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script> 
+	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" /> 
+
+	<script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
+	<script src="index.js"></script>
+	<script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-locatecontrol/v0.43.0/L.Control.Locate.min.js'></script>
+
+	<link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-locatecontrol/v0.43.0/L.Control.Locate.mapbox.css' rel='stylesheet'/>
+
+	<link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-locatecontrol/v0.43.0/css/font-awesome.min.css' rel='stylesheet'/>
+	<link rel="stylesheet" href="jquery.ui.datepicker.mobile.css" /> 
+	<script src="jQuery.ui.datepicker.js"></script>
+	<script src="jquery.ui.datepicker.mobile.js"></script>
+	<link rel="stylesheet" href="style.css"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+<body>
+	<div data-role="page" id="login_page">
+		<header data-role="header"data-position="fixed">
+			<h1>Sign in</h1>
+		</header>
+		<form id="login_form">
+			<div class="form-group">
+				<label for="username">Email:</label>
+				<input id="username" type="text" value="" name="username" id="username" required/>
+			</div>                                 
+			<div class="form-group">                                     
+				<label for="password">Password:</label>
+				<input id="password" type="password" value="" name="password" required/>
+			</div>
+			<div class="form-group">
+				<label for="userstatus">Είμαι υπάλληλος</label>
+				<input type="checkbox" name="userstatus" id="userstatus"/>
+				<label for="rememberbox">Remember me</label>
+				<input type="checkbox" name="rememberbox" id="rememberbox"/>
+			</div>    
+			<input type="submit" data-theme="b" value="Submit">
+			<input type="button" data-theme="b" id="register_link" value="Δεν έχω λογαριασμό">
+        </form> 
+	</div>
+	<div data-role="page" id="register_page">
+		<div data-role="header" class="ui-bar" data-position="fixed">
+			<h1>Register</h1>
+			<a class="ui-btn-left" data-icon="back" href="#login_page" data-clear-btn="true">Back to login screen</a>
+		</div>
+		<form id="register_form">
+            <div class="form-group">
+                <label for="register_username">Email:</label>
+                <input id="register_username" type="text" value="" name="username" required/>
+            </div>                                 
+            <div class="form-group">                                   
+                <label for="register_password">Password:</label>
+				<input id="register_password" type="password" value="" name="password" required/>
+			</div>
+			<div class="form-group">                                   
+				<label for="register_password2">Repeat password:</label>
+				<input id="register_password2" type="password" value="" name="password2" required"/>
+			</div>
+			<div class="form-group">
+				<label for="register_userstatus">Είμαι υπάλληλος</label>
+				<input id="register_userstatus" type="checkbox" name="userstatus"/>
+			</div>    
+			<input type="submit" data-theme="b" value="Submit">
+        </form> 
+	</div>
+	<div data-role="page" id="main_page">
+		<div data-role="header" class="ui-bar" data-position="fixed">
+			<h1 id="main_header"></h1>
+			<h2 id="username_header"></h2>
+			<input type="button" id="logout" class="ui-btn-right" value="log out">
+		</div>
+		<ul data-role="listview" data-filter="true">
+			<li><a href="#report_page">Δημιουργία Αναφοράς</a></li>
+			<li><a href="#map_page">Προβολή Σημείων/Γεγονότων Στον Χάρτη</a></li>
+			<li><a href="#list_page">Προβολή Σημείων Σε Λίστα</a></li>
+			<li><a href="#filtered_page" id="filter_option">Προβολή Σημείων Σε Λίστα Με Φίλτρα</a></li>
+		</ul>
+	</div>
+	<div data-role="page" id="report_page">
+		<div data-role="header" data-position="fixed">
+			<h1>Αναφορά</h1>
+			<a class="ui-btn-left" data-icon="home" href="#main_page" data-clear-btn="true">Home</a>
+		</div>
+		<form id="report_form">
+			<div class="form-group">   
+				<label for="select-native-1">Eπιλέξτε μια απο τις εξής κατηγορίες:</label>
+				<select name="category" id="select-native-1">
+					<option value="1">Γενικά</option>
+					<option value="2">Οδικά Θέματα Και Φωτισμός</option>
+					<option value="3">Περιβαλλοντικά Θέματα Και Καθαρισμός</option>
+					<option value="4">Εργασίες</option>
+					<option value="5">Συντηρήσεις</option>
+				</select>
+			</div>
+			<div class="form-group">   
+				<label for="t1">Σύντομη Περιγραφή Του Προβλήματος:</label>
+				<input type="text" name="description" id="t1" value="" required>
+				<label for="t2">Επιπλέον Λεπτομέρειες</label>
+				<input type="text" data-clear-btn="true" name="details" id="t2" value="">
+			</div>
+			<div class="form-group">   
+				<label for="f1">Επισύναψη αρχείου φωτογραφίας</label>
+				<input id="f1" type="file" accept="image/*" name="image" />
+				<img id="preview" src="#" style="max-width: 100%"/>
+			</div>
+			<div class="form-group">   
+				<label for="geotag">Η γεωγραφική σας θέση:</label>
+				<a id="geotag"></a>
+				<input type="button" id="refresh" value="refresh"></button>
+			</div>
+			<button id="submit" type="submit" value="Submit">Submit</button>
+		</form>
+	</div>
+	<div data-role="page" id="map_page">
+		<div data-role="header" class="ui-bar">
+			<h1>Χάρτης γεγονότων</h1>
+			<a type="button" id="map_refresh" class="ui-btn-right">Refresh</a>
+			<a type="button" class="ui-btn-left" data-icon="home" href="#main_page" data-clear-btn="true">Home</a>
+		</div>
+		<div id="mapcont">
+			<div id="mapid"></div>
+		</div>
+	</div>
+	<div data-role="page" id="point_page">
+		<div data-role="header" class="ui-bar" data-position="fixed">
+			<h1 id="point_name"></h1>
+			<div data-role="navbar">
+				<ul>
+					<li><a type="button" data-icon="home" href="#main_page">Home</a></li>
+					<li><a type="button" data-icon="navigation" href="#map_page">Χάρτης</a></li>
+					<li><a type="button" data-icon="bullets" href="#list_page">Λίστα</a></li>
+				</ul>
+			</div>
+		</div>
+		<h2>Λεπτομέρειες:</h2>
+		<p id="point_details"></p>
+		<h2>Συντεταγμένες:</h2>
+		<p id="point_location"></p>
+		<h2>Εικόνα:</h2>
+		<img id="point_image" src=""></img>
+		<h2>Χρονική στιγμή:</h2>
+		<p id="point_time"></p>
+		<h2>Βαθμολογία:<h1>
+		<div data-role="navbar">
+			<ul>
+				<li><a type="button" id="likebutton"></a></li>
+				<li><a type="button" id="dislikebutton"/></a></li>
+			</ul>
+		</div>
+	</div>
+	<div data-role="page" id="list_page">
+		<div data-role="header" class="ui-bar">
+			<h1>Λίστα γεγονότων</h1>
+			<a type="button" class="ui-btn-left" data-icon="home" href="#main_page" data-clear-btn="true">Home</a>
+			<form class="ui-filterable">
+				<input id="filter" data-type="search">
+			</form>
+		</div>
+		<ul id="point_list" data-role="listview" data-filter="true" data-input="#filter"/>
+
+    </div>
+	<div data-role="page" id="filtered_page">
+		<h1>Λίστα βάσει φίλτρου</h1>
+		<div data-role="navbar">
+			<ul>
+				<li><a type="button" data-icon="home" href="#main_page">Home</a></li>
+				<li><a type="button" data-icon="navigation" href="#map_page">Χάρτης</a></li>
+				<li><a type="button" data-icon="bullets" href="#list_page">Λίστα</a></li>
+			</ul>
+		</div>
+		<form id="filterform">
+			<label for="fromdate">Ημερομηνία απο:</label>
+			<input type="date" id="fromdate" value=""  required>
+			<label for="fromdate">Ημερομηνία ως:</label>
+			<input type="date" id="fromdate" value=""  required>
+			<label for="xfrom">Τεταγμένη από:</label>
+			<input id="xfrom" type="text" class="numbersOnly" value="" required>
+			<label for="xto">Τεταγμένη έως:</label>
+			<input id="xto" type="text" class="numbersOnly" value="" required>
+			<label for="yfrom">Τετμημένη από:</label>
+			<input id="yfrom" type="text" class="numbersOnly" value="" required>
+			<label for="yto">Τετμημένη έως:</label>
+			<input id="yto" type="text" class="numbersOnly" value="" required>
+			<input type="submit" data-theme="b" value="Submit">
+		</form>
+	</div>
+</body>
+
+</html>
