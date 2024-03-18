@@ -11,7 +11,7 @@ This web application serves as a platform for crowdsourcing reports of various e
   - jQuery Mobile for UI enhancements
   - Leaflet.js for interactive maps
 - **Back-end Development:**
-  - [Specify your backend technologies here]
+  - PHP & Mysql for responding to the requests and storing authentication/authorization data and incident data.
 
 ## Features
 
